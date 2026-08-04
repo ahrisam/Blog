@@ -1,0 +1,16 @@
+{% load static %}
+<header class="site-header">
+    <div class="nav-container">
+        <a href="{% url 'blog:post_list' %}" class="brand-logo">DevBlog</a>
+        <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+        <ul class="nav-menu">
+            <li><a href="{% url 'blog:post_list' %}" class="nav-link">Home</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'blog:post_create' %}" class="btn btn-primary">+ New Post</a></li>
+                <li><a href="{% url 'logout' %}" class="nav-link">Logout ({{ user.username }})</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</header>
