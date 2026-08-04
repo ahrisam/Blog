@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Blog{% endblock %} | DevBlog</title>
+    <meta name="description" content="{% block meta_description %}A modern blog built with Django.{% endblock %}">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f6ff', 100: '#ebedfe', 200: '#d3d6fd',
+                            300: '#aab0fa', 400: '#7c82f2', 500: '#5b5ce0',
+                            600: '#4640c4', 700: '#3931a0', 800: '#2f2a80',
+                            900: '#292669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        serif: ['Lora', 'ui-serif', 'Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans antialiased">
+
+    {% include "includes/navbar.html" %}
+
+    <main class="flex-1 w-full">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            {% include "includes/messages.html" %}
+        </div>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "includes/footer.html" %}
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

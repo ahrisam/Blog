@@ -1,0 +1,217 @@
+/* ---------- Base typography & prose ---------- */
+.prose-content {
+    font-size: 1.0625rem;
+}
+
+.prose-content p {
+    margin-bottom: 1.25rem;
+}
+
+.prose-content img {
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.prose-content h2,
+.prose-content h3 {
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    color: #0f172a;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.prose-content a {
+    color: #4640c4;
+    text-decoration: underline;
+    text-decoration-color: #d3d6fd;
+    text-underline-offset: 2px;
+}
+
+/* ---------- Badges / tag chips ---------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    white-space: nowrap;
+}
+
+/* ---------- Post cards ---------- */
+.post-card,
+.post-row {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-2px);
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background-color: #4640c4;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 0.65rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.btn-primary:hover { background-color: #3931a0; }
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background-color: #fff;
+    color: #475569;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 0.65rem;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.btn-secondary:hover { background-color: #f8fafc; }
+
+.btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background-color: #dc2626;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 0.65rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.btn-danger:hover { background-color: #b91c1c; }
+
+/* ---------- Forms ---------- */
+.form-group { display: flex; flex-direction: column; }
+
+.form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 0.4rem;
+}
+
+.form-hint {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 0.3rem;
+}
+
+.form-error {
+    font-size: 0.8rem;
+    color: #dc2626;
+    margin-top: 0.35rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.65rem;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.9rem;
+    color: #1e293b;
+    background-color: #f8fafc;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #7c82f2;
+    box-shadow: 0 0 0 3px rgba(124, 130, 242, 0.2);
+    background-color: #fff;
+}
+
+.form-group textarea {
+    min-height: 220px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+/* comment textarea rendered via {{ comment_form.body }} */
+form textarea {
+    width: 100%;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.65rem;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+    min-height: 90px;
+    background-color: #f8fafc;
+}
+form textarea:focus {
+    outline: none;
+    border-color: #7c82f2;
+    box-shadow: 0 0 0 3px rgba(124, 130, 242, 0.2);
+    background-color: #fff;
+}
+
+/* ---------- Comments ---------- */
+.comment-item { align-items: flex-start; }
+
+/* ---------- Pagination ---------- */
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.6rem;
+    border-radius: 0.6rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #475569;
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+    transition: background-color 0.15s ease;
+}
+.page-link:hover { background-color: #f1f5f9; }
+.page-link-active {
+    background-color: #4640c4;
+    border-color: #4640c4;
+    color: #fff;
+}
+.page-link-disabled {
+    color: #cbd5e1;
+    cursor: not-allowed;
+}
+
+/* ---------- Message alerts ---------- */
+.js-alert {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.js-alert.is-hiding {
+    opacity: 0;
+    transform: translateY(-6px);
+}
+
+/* ---------- Mobile nav ---------- */
+#mobile-nav-menu.is-open {
+    display: flex;
+}

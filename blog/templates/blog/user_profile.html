@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ profile_user.username }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+
+    <div class="pt-10 pb-8 flex flex-col sm:flex-row items-center sm:items-start gap-6 border-b border-slate-200 mb-10">
+        {% if profile_user.profile.avatar %}
+            <img src="{{ profile_user.profile.avatar.url }}" alt="{{ profile_user.username }}" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md">
+        {% else %}
+            <span class="w-24 h-24 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-3xl font-semibold border-4 border-white shadow-md">
+                {{ profile_user.username|slice:":1"|upper }}
+            </span>
+        {% endif %}
+
+        <div class="text-center sm:text-left">
+            <h1 class="text-2xl sm:text-3xl font-serif font-semibold text-slate-900">{{ profile_user.username }}</h1>
+            {% if profile_user.profile.title %}
+                <p class="text-brand-600 font-medium text-sm mt-1">{{ profile_user.profile.title }}</p>
+            {% endif %}
+            <p class="text-slate-500 text-sm mt-3 max-w-xl">{{ profile_user.profile.bio|default:"This author hasn't written a bio yet."|linebreaksbr }}</p>
+
+            <div class="flex items-center justify-center sm:justify-start gap-4 mt-4 text-sm text-slate-500">
+                <span><span class="font-semibold text-slate-800">{{ posts.paginator.count|default:posts.count }}</span> posts</span>
+                <span>Joined {{ profile_user.date_joined|date:"F Y" }}</span>
+            </div>
+
+            {% if user == profile_user %}
+                <a href="{% url 'blog:post_create' %}" class="btn-primary inline-block mt-4">Write New Post</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <h2 class="text-xl font-serif font-semibold text-slate-900 mb-6">Posts by {{ profile_user.username }}</h2>
+
+    <div class="flex flex-col gap-4">
+        {% for post in posts %}
+        <a href="{% url 'blog:post_detail' post.slug %}" class="post-row flex items-center gap-4 bg-white rounded-xl border border-slate-200 p-4 hover:shadow-md hover:border-brand-200 transition-all">
+            <div class="w-20 h-16 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0">
+                {% if post.featured_image %}
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+                {% endif %}
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                    {% if post.category %}
+                        <span class="badge bg-brand-50 text-brand-700 border border-brand-100">{{ post.category.name }}</span>
+                    {% endif %}
+                    {% if not post.is_published %}
+                        <span class="badge bg-amber-50 text-amber-700 border border-amber-100">Draft</span>
+                    {% endif %}
+                </div>
+                <h3 class="font-semibold text-slate-800 truncate">{{ post.title }}</h3>
+                <p class="text-sm text-slate-400">{{ post.published_date|default:post.created_at|date:"F j, Y" }}</p>
+            </div>
+        </a>
+        {% empty %}
+        <div class="text-center py-16 border border-dashed border-slate-300 rounded-2xl">
+            <p class="text-slate-500">{{ profile_user.username }} hasn't published any posts yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if posts.has_other_pages %}
+    <nav class="mt-10 flex items-center justify-center gap-2" aria-label="Pagination">
+        {% if posts.has_previous %}
+            <a href="?page={{ posts.previous_page_number }}" class="page-link">&larr; Prev</a>
+        {% endif %}
+        <span class="page-link page-link-active">{{ posts.number }}</span>
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}" class="page-link">Next &rarr;</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+
+</div>
+{% endblock %}
