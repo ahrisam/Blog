@@ -4,3 +4,5 @@
 *.pyc
 *.venv
 *db.sqlite3
+blog/__pycache__ 
+config/__pycache__

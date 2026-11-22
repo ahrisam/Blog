@@ -1,0 +1,83 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f2">
+  <meta name="description" content="Fieldnotes is a little corner of the internet for thoughtful stories, ideas, and things worth sharing.">
+  <title>Fieldnotes — stories worth keeping</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Fieldnotes home"><span class="brand-mark" aria-hidden="true">f.</span><span>fieldnotes</span></a>
+    <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+      <a class="nav-current" href="#latest">Read</a>
+      <a href="#about">About</a>
+      <a href="#newsletter">Newsletter</a>
+    </nav>
+    {% if request.user.is.authenticated %}
+    nothing
+    {% else %}
+    <a class="header-cta" href="{% url 'login' %}">Sign in / Join <span aria-hidden="true">↗</span></a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="main-nav"><span></span><span></span></button>
+    {% endif %}
+</header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> A journal for curious minds</p>
+        <h1 id="hero-title">Ideas for a life<br>well <em>noticed.</em></h1>
+        <p class="hero-intro">A little corner of the internet for thoughtful stories, new perspectives, and the things worth passing along.</p>
+        <a class="text-link" href="#latest">Find something to read <span aria-hidden="true">↓</span></a>
+        <div class="hero-note"><span class="note-avatars" aria-hidden="true"><i>J</i><i>M</i><i>A</i></span><span>Made for the <strong>quietly curious</strong></span></div>
+      </div>
+      <div class="hero-art" aria-label="Illustration of a sunny reading nook">
+        <div class="sun"></div><div class="art-window"><div class="window-pane"></div><div class="window-sill"></div></div>
+        <div class="plant plant-one"><i></i><i></i><i></i><i></i><b></b></div>
+        <div class="chair"><div class="chair-back"></div><div class="chair-seat"></div><div class="chair-leg left"></div><div class="chair-leg right"></div><div class="book book-one"></div><div class="book book-two"></div></div>
+        <div class="art-caption"><span>01 / SLOW MORNINGS</span><span>Take a breath. Stay a while.</span></div>
+        <span class="art-sparkle sparkle-one">✳</span><span class="art-sparkle sparkle-two">✳</span>
+      </div>
+    </section>
+
+    <section class="topics" aria-label="Browse topics">
+      <span class="topics-label">A few things we think about</span>
+      <div class="topic-list"><a href="#latest" data-topic="All">Everything <span>↗</span></a><a href="#latest" data-topic="Life">Life & living</a><a href="#latest" data-topic="Ideas">Ideas</a><a href="#latest" data-topic="Culture">Culture</a><a href="#latest" data-topic="Notes">Field notes</a></div>
+    </section>
+
+    <section class="latest section-wrap" id="latest" aria-labelledby="latest-title">
+      <div class="section-heading"><div><p class="eyebrow">Fresh from the journal</p><h2 id="latest-title">The latest <em>notes.</em></h2></div><a class="all-link" href="#latest">Explore all stories <span aria-hidden="true">↗</span></a></div>
+      <div class="post-grid" id="post-grid">
+        {% if posts %}
+          {% for post in posts %}
+          <article class="post-card" data-category="{{ post.category.name|default:'Notes' }}">
+            <a class="post-art post-art-{{ forloop.counter0|add:'1' }}" href="/posts/{{ post.pk }}/" tabindex="-1" aria-hidden="true"><span class="art-tag">{{ post.category.name|default:'Field notes' }}</span><span class="post-art-shape"></span></a>
+            <div class="post-info"><div class="post-meta"><span>{{ post.created_at|date:'M j, Y' }}</span><span class="meta-dot">·</span><span>{{ post.author.username }}</span></div><h3><a href="/posts/{{ post.pk }}/">{{ post.title }}</a></h3><p>{{ post.content|striptags|truncatewords:22 }}</p><a class="read-link" href="/posts/{{ post.pk }}/" aria-label="Read {{ post.title }}">Read story <span aria-hidden="true">↗</span></a></div>
+          </article>
+          {% endfor %}
+        {% else %}
+          <article class="post-card" data-category="Life"><a class="post-art post-art-1" href="#about" tabindex="-1" aria-hidden="true"><span class="art-tag">Life & living</span><span class="post-art-shape"></span></a><div class="post-info"><div class="post-meta"><span>May 18, 2025</span><span class="meta-dot">·</span><span>Jamie Lee</span></div><h3><a href="#about">The gentle art of doing one thing at a time</a></h3><p>Somewhere along the way, every quiet moment became a thing to fill. What if we let a few of them stay empty?</p><a class="read-link" href="#about">Read story <span aria-hidden="true">↗</span></a></div></article>
+          <article class="post-card" data-category="Ideas"><a class="post-art post-art-2" href="#about" tabindex="-1" aria-hidden="true"><span class="art-tag">Ideas</span><span class="post-art-shape"></span></a><div class="post-info"><div class="post-meta"><span>May 12, 2025</span><span class="meta-dot">·</span><span>Morgan Reed</span></div><h3><a href="#about">A small case for making things badly</a></h3><p>Before the masterpiece, there is the awkward first try. Here’s why getting started is its own kind of craft.</p><a class="read-link" href="#about">Read story <span aria-hidden="true">↗</span></a></div></article>
+          <article class="post-card" data-category="Culture"><a class="post-art post-art-3" href="#about" tabindex="-1" aria-hidden="true"><span class="art-tag">Culture</span><span class="post-art-shape"></span></a><div class="post-info"><div class="post-meta"><span>May 06, 2025</span><span class="meta-dot">·</span><span>Alex Rivera</span></div><h3><a href="#about">On keeping a commonplace book</a></h3><p>A home for half-formed thoughts, overheard lines, and tiny details you don't want the day to wash away.</p><a class="read-link" href="#about">Read story <span aria-hidden="true">↗</span></a></div></article>
+          <article class="post-card" data-category="Notes"><a class="post-art post-art-4" href="#about" tabindex="-1" aria-hidden="true"><span class="art-tag">Field notes</span><span class="post-art-shape"></span></a><div class="post-info"><div class="post-meta"><span>Apr 29, 2025</span><span class="meta-dot">·</span><span>Sam Okafor</span></div><h3><a href="#about">A walk with nowhere in particular to go</a></h3><p>Take the long way home. Leave the headphones in your pocket. See what the familiar has been trying to tell you.</p><a class="read-link" href="#about">Read story <span aria-hidden="true">↗</span></a></div></article>
+          <article class="post-card" data-category="Life"><a class="post-art post-art-5" href="#about" tabindex="-1" aria-hidden="true"><span class="art-tag">Life & living</span><span class="post-art-shape"></span></a><div class="post-info"><div class="post-meta"><span>Apr 22, 2025</span><span class="meta-dot">·</span><span>Jamie Lee</span></div><h3><a href="#about">The things we keep on the windowsill</a></h3><p>A tiny museum of ordinary life: a stone from the beach, a cutting from a friend, a postcard from a good day.</p><a class="read-link" href="#about">Read story <span aria-hidden="true">↗</span></a></div></article>
+          <article class="post-card" data-category="Ideas"><a class="post-art post-art-6" href="#about" tabindex="-1" aria-hidden="true"><span class="art-tag">Ideas</span><span class="post-art-shape"></span></a><div class="post-info"><div class="post-meta"><span>Apr 16, 2025</span><span class="meta-dot">·</span><span>Morgan Reed</span></div><h3><a href="#about">How to ask a better question</a></h3><p>Curiosity isn't having the answer ready. It's knowing how to open a door and being willing to see what’s on the other side.</p><a class="read-link" href="#about">Read story <span aria-hidden="true">↗</span></a></div></article>
+        {% endif %}
+      </div>
+      <p class="empty-state" id="empty-state" hidden>No stories in this topic yet. Try another one.</p>
+      <div class="browse-more"><span class="browse-line"></span><a href="#latest" class="browse-button">That’s all for now <span aria-hidden="true">✳</span></a><span class="browse-line"></span></div>
+    </section>
+
+    <section class="newsletter" id="newsletter" aria-labelledby="newsletter-title"><div class="newsletter-flower" aria-hidden="true">✳</div><div><p class="eyebrow">A good thing for your inbox</p><h2 id="newsletter-title">A little note for<br>your <em>Sunday.</em></h2><p>One thoughtful read, a small idea, and something lovely to notice. Sent when the week winds down.</p></div><form class="signup-form" id="signup-form"><label for="email">Your email address</label><div class="input-row"><input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required><button type="submit" aria-label="Subscribe to the newsletter">Join us <span aria-hidden="true">↗</span></button></div><small id="signup-message" aria-live="polite">No noise. Just a note, once a week.</small></form></section>
+    <section class="about-strip" id="about"><span class="about-mark">f.</span><p>Made slowly, read slowly.<br><span>Fieldnotes is a journal about paying attention.</span></p><a href="#latest">Back to the top ↑</a></section>
+  </main>
+  <footer class="site-footer"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">f.</span><span>fieldnotes</span></a><span>© 2025 Fieldnotes Journal</span><span>Made with care, wherever you are.</span></footer>
+  <script src="{% static 'js/home.js' %}" defer></script>
+</body>
+</html>
